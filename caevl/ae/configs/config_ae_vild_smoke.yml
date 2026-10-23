@@ -1,0 +1,58 @@
+image_size: [256, 224]
+
+AutoEncoder:
+  nb_input_channels: 1
+  nb_channels_fst_feature_map: 64
+  latent_dim: 1024
+  learning_rate: 6e-5
+  scheduler: True
+  loss_name: 'L2'
+  device: 'auto'
+  alpha: 1
+  flag_perceptual_loss: True
+  canny_edges: True
+  scalar_divide_channels_fst_feature_map_for_decoder: 1
+  encoder_only: False
+  softmax: False
+  sigmoid: False
+  use_cbam: False
+
+Dataset:
+  images_directory: '.smoke_data/train_satellite'
+  val_images_directory: '.smoke_data/val_satellite'
+  path_dict_coordinates: '.smoke_data/train_satellite.pkl'
+  path_dict_coordinates_val: '.smoke_data/val_satellite.pkl'
+
+  grayscale: True
+
+  use_PIL: True
+  apply_transform: True
+  apply_normalization: False
+
+  transform:
+    rot_degrees: 30
+    translate: [10, 10]
+    blur_kernel_size: 5
+    brightness_factor: 1.
+    contrast_factor: 1.
+    noise_mean: 0
+    noise_std: 0.1
+    zoom_in_prob: 0.7
+    blur_prob: 0.5
+    brightness_prob: 0.5
+    contrast_prob: 0.5
+    noise_prob: 0
+    vignetting_prob: 1
+    masking_prob: 1
+    vignetting_val: 70
+
+trainer:
+  batch_size: 8
+  num_workers_loader: 0
+  patience: 3
+  num_epochs: 2
+  model_save_path: '.smoke_data/models/stageone/stageone.pth'
+  losses_save_dir_path: '.smoke_data/models/stageone/losses'
+  force_save: False
+  save_checkpoint: 1
+  save_optimizer: False

@@ -178,3 +178,4 @@ caevl/models/trained/
 .vscode
 .flake8
 results/
+.smoke_data/

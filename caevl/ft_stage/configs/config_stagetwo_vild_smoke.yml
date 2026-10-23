@@ -1,0 +1,54 @@
+image_size: [256, 224]
+seed: 42
+
+architecture:
+  device: 'cuda'
+  dir_model: 'AutoEncoder'
+  backbone: 'stageone'
+  invariance_coeff: 25
+  std_coeff: 25
+  cov_coeff: 1
+  alpha: 0.75
+
+Dataset:
+  images_directory: '.smoke_data/train_satellite'
+  val_images_directory: '.smoke_data/val_satellite'
+  path_dict_coordinates: '.smoke_data/train_satellite.pkl'
+  path_dict_coordinates_val: '.smoke_data/val_satellite.pkl'
+
+  use_PIL: True
+  apply_transform: True
+  apply_normalization: False
+
+  train_dataset:
+  canny_edges: True
+  return_locations: True
+
+  transform:
+    rot_degrees: 30
+    translate: [10, 10]
+    blur_kernel_size: 5
+    brightness_factor: 1.
+    contrast_factor: 1.
+    noise_mean: 0
+    noise_std: 0.1
+    zoom_in_prob: 0.8
+    blur_prob: 0.5
+    brightness_prob: 0.5
+    contrast_prob: 0.5
+    noise_prob: 0
+    vignetting_prob: 1
+    masking_prob: 1
+    vignetting_val: 70
+
+
+trainer:
+  batch_size: 8
+  learning_rate: 6e-5
+  num_workers_loader: 0
+  patience: 3
+  num_epochs: 2
+  model_save_path: '.smoke_data/models/stagetwo/stagetwo.pth'
+  losses_save_dir_path: '.smoke_data/models/stagetwo/losses'
+  save_checkpoint: 1
+  save_optimizer: False
